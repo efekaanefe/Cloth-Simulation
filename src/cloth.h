@@ -1,6 +1,14 @@
 #pragma once
 
-const int SCREEN_WIDTH = 1200;
-const int SCREEN_HEIGHT = 800;
-const int NUM_VERTECES_WIDTH = 20;
-const int NUM_VERTECES_HEIGHY = 20;
+#include "body.h"
+#include "constants.h"
+
+class Cloth {
+  private:
+    Body bodies[NUM_VERTECES_WIDTH * NUM_VERTECES_HEIGHT];
+
+  public:
+    Cloth();
+    void Draw();
+    void Update(float dt);
+};
