@@ -1,11 +1,11 @@
 #pragma once
 
-#include "body.h"
+#include "particle.h"
 #include "constants.h"
 
 class Cloth {
   private:
-    Body bodies[NUM_VERTECES_WIDTH * NUM_VERTECES_HEIGHT];
+    Particle particles[NUM_VERTECES_WIDTH * NUM_VERTECES_HEIGHT];
 
   public:
     Cloth();

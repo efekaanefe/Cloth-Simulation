@@ -16,18 +16,18 @@ Cloth::Cloth() {
     for (int i = 0; i < NUM_VERTECES_WIDTH; i++) {
         for (int j = 0; j < NUM_VERTECES_HEIGHT; j++) {
 
-            int body_index = i + NUM_VERTECES_HEIGHT * j;
-            bodies[body_index].position = {start_x + i * del_x,
+            int particle_index = i + NUM_VERTECES_HEIGHT * j;
+            particles[particle_index].position = {start_x + i * del_x,
                                            start_y + j * del_y};
-            bodies[body_index].mass = BODY_MASS;
-            bodies[body_index].is_fixed = true;
+            particles[particle_index].mass = PARTICLE_MASS;
+            particles[particle_index].is_fixed = true;
         }
     }
 }
 
 void Cloth::Draw() {
-    for (int i = 0; i < NUM_BODIES ; i++) {
-        bodies[i].Draw();
+    for (int i = 0; i < NUM_PARTICLES ; i++) {
+        particles[i].Draw();
     }
 }
 

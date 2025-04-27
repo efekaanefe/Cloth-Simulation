@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 
-class Body {
+class Particle {
   private:
   public:
     float mass;
@@ -12,6 +12,6 @@ class Body {
     bool is_fixed;
     
     void Draw() {
-        DrawCircle(position.x, position.y, BODY_RADIUS, DARKGRAY);
+        DrawCircle(position.x, position.y, PARTICLE_RADIUS, DARKGRAY);
     }
 };
