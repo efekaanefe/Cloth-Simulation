@@ -12,6 +12,6 @@ class Particle {
     bool is_fixed;
     
     void Draw() {
-        DrawCircle(position.x, position.y, PARTICLE_RADIUS, DARKGRAY);
+        DrawCircle(position.x, position.y, PARTICLE_RADIUS, CLOTH_COLOR);
     }
 };
