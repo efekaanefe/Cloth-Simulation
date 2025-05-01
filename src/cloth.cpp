@@ -33,7 +33,7 @@ Cloth::Cloth() {
                                                   start_y + j * delY};
             particles[particle_index].mass = PARTICLE_MASS;
             /*particles[particle_index].isFixed = (j == 0); // Top row is fixed*/
-            particles[particle_index].isFixed = (j == 0 && i % 2 == 0);
+            particles[particle_index].isFixed = (j == 0 && i % 5 == 0);
         }
     }
 
@@ -105,6 +105,7 @@ void Cloth::Draw() {
 void Cloth::Update(float dt) {
 
     // TODO: drag particle and cut connection
+    // TODO: add wind using noise
 
     // Apply spring forces
     for (auto &conn : connections) {
