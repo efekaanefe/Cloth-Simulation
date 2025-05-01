@@ -14,7 +14,7 @@ int main() {
 
         BeginDrawing();
 
-        cloth.Update(deltaTime);
+        cloth.Update(0.01f);
         cloth.Draw();
 
         DrawFPS(10, 10);
