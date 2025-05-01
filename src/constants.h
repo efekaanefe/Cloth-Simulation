@@ -8,9 +8,12 @@ const int NUM_VERTICES_WIDTH = 20;
 const int NUM_VERTICES_HEIGHT = 20;
 const int NUM_PARTICLES = NUM_VERTICES_HEIGHT * NUM_VERTICES_HEIGHT;
 
-const float PARTICLE_MASS = 1;
+const float PARTICLE_MASS = 100;
 const float PARTICLE_RADIUS = 3;
 
 const Color CLOTH_COLOR = DARKGRAY;
 const Color FIXED_PARTICLE_COLOR = RED;
 const float LINE_THICKNESS = 3.0f;
+
+const float SPRING_K = 1.0f;
+const float G = 9.81;

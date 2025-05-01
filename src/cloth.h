@@ -13,6 +13,7 @@ class Cloth {
   private:
     Particle particles[NUM_VERTICES_WIDTH * NUM_VERTICES_HEIGHT];
     std::vector<Connection> connections;
+    float restLength;
 
   public:
     Cloth();

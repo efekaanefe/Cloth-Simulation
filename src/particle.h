@@ -9,6 +9,8 @@ class Particle {
   public:
     float mass;
     Vector2 position;
+    Vector2 velocity;
+    Vector2 force;
     bool isFixed;
     
     void Draw() {

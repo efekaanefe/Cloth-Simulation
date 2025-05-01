@@ -1,10 +1,9 @@
-#include <raylib.h>
-#include "constants.h"
 #include "cloth.h"
-
+#include "constants.h"
+#include <raylib.h>
 
 int main() {
-    
+
     Cloth cloth = Cloth();
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Cloth Simulation");
@@ -15,6 +14,7 @@ int main() {
 
         BeginDrawing();
 
+        cloth.Update(deltaTime);
         cloth.Draw();
 
         DrawFPS(10, 10);
