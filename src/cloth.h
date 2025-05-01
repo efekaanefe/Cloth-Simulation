@@ -5,8 +5,8 @@
 #include <vector>
 
 struct Connection{
-    Particle* p1;
-    Particle* p2;
+    Particle* p1 = nullptr;
+    Particle* p2 = nullptr;
 };
 
 class Cloth {

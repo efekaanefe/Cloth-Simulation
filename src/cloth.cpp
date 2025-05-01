@@ -20,24 +20,28 @@ Cloth::Cloth() {
                                                   start_y + j * del_y};
 
             particles[particle_index].mass = PARTICLE_MASS;
-            particles[particle_index].is_fixed = true;
+            particles[particle_index].isFixed = (j == 0); // Top row is fixed
 
             // Connections
             if (i > 0) { // Has left neighbor
                 int left_index = (i - 1) + NUM_VERTICES_HEIGHT * j;
-                connections.push_back({&particles[particle_index], &particles[left_index]});
+                connections.push_back(
+                    {&particles[particle_index], &particles[left_index]});
             }
             if (i < NUM_VERTICES_HEIGHT - 1) { // Has right neighbor
                 int right_index = (i + 1) + NUM_VERTICES_HEIGHT * j;
-                connections.push_back({&particles[particle_index], &particles[right_index]});
+                connections.push_back(
+                    {&particles[particle_index], &particles[right_index]});
             }
             if (j > 0) { // Has top neighbor
                 int top_index = i + NUM_VERTICES_HEIGHT * (j - 1);
-                connections.push_back({&particles[particle_index], &particles[top_index]});
+                connections.push_back(
+                    {&particles[particle_index], &particles[top_index]});
             }
             if (j < NUM_VERTICES_WIDTH - 1) { // Has bottom neighbor
                 int bottom_index = i + NUM_VERTICES_HEIGHT * (j + 1);
-                connections.push_back({&particles[particle_index], &particles[bottom_index]});
+                connections.push_back(
+                    {&particles[particle_index], &particles[bottom_index]});
             }
         }
     }
@@ -47,11 +51,16 @@ void Cloth::Draw() {
     for (int i = 0; i < NUM_PARTICLES; i++) {
         particles[i].Draw();
     }
-    for (size_t i = 0; i < connections.size(); ++i){
+    for (size_t i = 0; i < connections.size(); ++i) {
         Connection connection = connections[i];
-        Particle* p1 = connection.p1;
-        Particle* p2 = connection.p2;
-        DrawLine(p1->position.x, p1->position.y, p2->position.x, p2->position.y, CLOTH_COLOR);
+        Particle *p1 = connection.p1;
+        Particle *p2 = connection.p2;
+
+        Color color = CLOTH_COLOR;
+
+        if (p1->isFixed and p2->isFixed) color = FIXED_PARTICLE_COLOR; 
+            
+        DrawLineEx(p1->position, p2->position, LINE_THICKNESS, color);
     }
 }
 

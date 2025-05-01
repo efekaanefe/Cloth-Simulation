@@ -9,9 +9,11 @@ class Particle {
   public:
     float mass;
     Vector2 position;
-    bool is_fixed;
+    bool isFixed;
     
     void Draw() {
-        DrawCircle(position.x, position.y, PARTICLE_RADIUS, CLOTH_COLOR);
+        Color color = CLOTH_COLOR;
+        if (isFixed == true) color = FIXED_PARTICLE_COLOR; 
+        DrawCircle(position.x, position.y, PARTICLE_RADIUS, color);
     }
 };
