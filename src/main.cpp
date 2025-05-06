@@ -6,6 +6,8 @@ int main() {
 
     Cloth cloth = Cloth();
 
+    float totalFrames = 0.0f;
+
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Cloth Simulation");
 
     while (!WindowShouldClose()) {
@@ -14,11 +16,13 @@ int main() {
 
         BeginDrawing();
 
-        cloth.Update(0.01f);
+        cloth.Update(deltaTime, totalFrames);
         cloth.Draw();
 
         DrawFPS(10, 10);
         EndDrawing();
+
+        totalFrames++;
     }
 
     CloseWindow();

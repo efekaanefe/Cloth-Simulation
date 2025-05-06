@@ -4,6 +4,7 @@
 #include "constants.h"
 #include <vector>
 
+
 struct Connection{
     Particle* p1 = nullptr;
     Particle* p2 = nullptr;
@@ -18,5 +19,7 @@ class Cloth {
   public:
     Cloth();
     void Draw();
-    void Update(float dt);
+    void Update(float dt, float totalFrames);
 };
+
+

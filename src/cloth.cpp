@@ -5,14 +5,25 @@
 #include "raymath.h"
 #include <algorithm>
 #include <cmath>
-#include <functional>
 #include <stdio.h>
 #include <unordered_set>
+#include <cmath>
 
 // Helper function to create a unique key for a connection
 size_t connectionKey(int a, int b) {
     return a < b ? (size_t(a) << 32) | b : (size_t(b) << 32) | a;
 }
+
+Vector2 GetWind(Vector2 pos, float time) {
+    float scale = 0.005f;
+    float timeScale = 0.005f;
+
+    float noiseX = sinf(pos.y * scale + time * timeScale);
+    float noiseY = cosf(pos.x * scale + time * timeScale);
+
+    return Vector2{ noiseX, noiseY };
+}
+
 
 Cloth::Cloth() {
     float start_x = 0.2f * SCREEN_WIDTH;
@@ -102,7 +113,7 @@ void Cloth::Draw() {
     }
 }
 
-void Cloth::Update(float dt) {
+void Cloth::Update(float dt, float totalFrames) {
 
     // TODO: drag particle and cut connection
     // TODO: add wind using noise
@@ -141,41 +152,47 @@ void Cloth::Update(float dt) {
 
     // Update particles
     for (int i = 0; i < NUM_PARTICLES; i++) {
-        Particle &p = particles[i];
+        Particle &particle = particles[i];
 
-        if (p.isFixed) {
-            p.force = Vector2Zero();
-            p.velocity = Vector2Zero();
+
+        if (particle.isFixed) {
+            particle.force = Vector2Zero();
+            particle.velocity = Vector2Zero();
             continue;
         }
 
-        p.force.y += p.mass * G;
+        Vector2 wind = GetWind(particle.position, totalFrames);
+        particle.force = Vector2Add(Vector2Scale(wind, WIND_STRENGTH * dt), particle.force);
 
-        Vector2 acceleration = Vector2Scale(p.force, 1.0f / p.mass);
+        particle.force.y += particle.mass * G;
 
-        p.velocity = Vector2Add(p.velocity, Vector2Scale(acceleration, dt));
+        Vector2 acceleration = Vector2Scale(particle.force, 1.0f / particle.mass);
 
-        p.velocity = Vector2Scale(p.velocity, 1.0f - DAMPING_FACTOR * dt);
+        particle.velocity = Vector2Add(particle.velocity, Vector2Scale(acceleration, dt));
 
-        float speed = Vector2Length(p.velocity);
+        particle.velocity = Vector2Scale(particle.velocity, 1.0f - DAMPING_FACTOR * dt);
+
+        float speed = Vector2Length(particle.velocity);
         if (speed > MAX_SPEED) {
-            p.velocity = Vector2Scale(Vector2Normalize(p.velocity), MAX_SPEED);
+            particle.velocity = Vector2Scale(Vector2Normalize(particle.velocity), MAX_SPEED);
         }
 
         // Check for NaN values
         // BUG: I don't know why sometimes this happens??
-        if (std::isnan(p.velocity.x) || std::isnan(p.velocity.y)) {
-            p.velocity = Vector2Zero();
+        if (std::isnan(particle.velocity.x) || std::isnan(particle.velocity.y)) {
+            particle.velocity = Vector2Zero();
         }
 
-        p.position = Vector2Add(p.position, Vector2Scale(p.velocity, dt));
+        particle.position = Vector2Add(particle.position, Vector2Scale(particle.velocity, dt));
 
         // Check for NaN positions and reset if needed
-        if (std::isnan(p.position.x) || std::isnan(p.position.y)) {
-            p.position = {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f};
-            p.velocity = Vector2Zero();
+        if (std::isnan(particle.position.x) || std::isnan(particle.position.y)) {
+            particle.position = {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f};
+            particle.velocity = Vector2Zero();
         }
 
-        p.force = Vector2Zero();
+        particle.force = Vector2Zero();
     }
 }
+
+
