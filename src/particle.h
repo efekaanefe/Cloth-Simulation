@@ -1,21 +1,19 @@
 #pragma once
-
 #include "constants.h"
 #include <raylib.h>
-
 
 class Particle {
   private:
   public:
     float mass;
-    Vector2 position;
-    Vector2 velocity;
-    Vector2 force;
+    Vector3 position;
+    Vector3 velocity;
+    Vector3 force;
     bool isFixed;
     
     void Draw() {
         Color color = CLOTH_COLOR;
         if (isFixed == true) color = FIXED_PARTICLE_COLOR; 
-        DrawCircle(position.x, position.y, PARTICLE_RADIUS, color);
+        DrawSphere(position, PARTICLE_RADIUS, color);
     }
 };
