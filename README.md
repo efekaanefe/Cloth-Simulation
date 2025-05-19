@@ -9,3 +9,5 @@ This project implements a 3D cloth simulation using a particle-spring system bui
 - [ ] Drag particle
 - [ ] Make particle fixed
 - [ ] Texture on the flag
+- [ ] Verlet integration
+
